@@ -61,7 +61,7 @@ To update `go-gitlab-client`, use `go get -u`:
 
 ##Documentation
 
-Visit the docs at http://godoc.org/github.com/kyokomi/go-gitlab-client
+Visit the docs at https://godoc.org/github.com/kyokomi/go-gitlab-client/gogitlab
 
 
 ## Examples
