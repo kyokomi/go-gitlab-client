@@ -3,7 +3,7 @@ go-gitlab-client
 
 go-gitlab-client is a simple client written in golang to consume gitlab API.
 
-[![Build Status](https://travis-ci.org/plouc/go-gitlab-client.png?branch=master)](https://travis-ci.org/plouc/go-gitlab-client)
+[![Build Status](https://travis-ci.org/kyokomi/go-gitlab-client.png?branch=master)](https://travis-ci.org/kyokomi/go-gitlab-client)
 
 
 ##features
@@ -39,7 +39,7 @@ go-gitlab-client is a simple client written in golang to consume gitlab API.
 
 To install go-gitlab-client, use `go get`:
 
-    go get github.com/plouc/go-gitlab-client
+    go get github.com/kyokomi/go-gitlab-client
 
 Import the `go-gitlab-client` package into your code:
 
@@ -47,7 +47,7 @@ Import the `go-gitlab-client` package into your code:
 package whatever
 
 import (
-    "github.com/plouc/go-gitlab-client/gogitlab"
+    "github.com/kyokomi/go-gitlab-client/gogitlab"
 )
 ```
 
@@ -56,17 +56,17 @@ import (
 
 To update `go-gitlab-client`, use `go get -u`:
 
-    go get -u github.com/plouc/go-gitlab-client
+    go get -u github.com/kyokomi/go-gitlab-client
 
 
 ##Documentation
 
-Visit the docs at http://godoc.org/github.com/plouc/go-gitlab-client
+Visit the docs at http://godoc.org/github.com/kyokomi/go-gitlab-client
 
 
 ## Examples
 
 You can play with the examples located in the `examples` directory
 
-* [projects](https://github.com/plouc/go-gitlab-client/tree/master/examples/projects)
-* [repositories](https://github.com/plouc/go-gitlab-client/tree/master/examples/repositories)
+* [projects](https://github.com/kyokomi/go-gitlab-client/tree/master/examples/projects)
+* [repositories](https://github.com/kyokomi/go-gitlab-client/tree/master/examples/repositories)
