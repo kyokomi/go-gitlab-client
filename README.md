@@ -47,7 +47,7 @@ Import the `go-gitlab-client` package into your code:
 package whatever
 
 import (
-    "github.com/plouc/go-gitlab-client"
+    "github.com/plouc/go-gitlab-client/gogitlab"
 )
 ```
 
