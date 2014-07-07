@@ -39,7 +39,7 @@ go-gitlab-client is a simple client written in golang to consume gitlab API.
 
 To install go-gitlab-client, use `go get`:
 
-    go get github.com/kyokomi/go-gitlab-client
+    go get github.com/kyokomi/go-gitlab-client/gogitlab
 
 Import the `go-gitlab-client` package into your code:
 
@@ -56,7 +56,7 @@ import (
 
 To update `go-gitlab-client`, use `go get -u`:
 
-    go get -u github.com/kyokomi/go-gitlab-client
+    go get -u github.com/kyokomi/go-gitlab-client/gogitlab
 
 
 ##Documentation
