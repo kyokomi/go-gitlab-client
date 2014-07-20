@@ -7,8 +7,8 @@ import (
 )
 
 const (
-	issues_url           = "/issues/"                     // Get a specific issues
-	project_issues_url   = "/projects/%d/issues"         // Get a specific issues
+	issues_url                  = "/issues/"                     // Get a specific issues
+	project_issues_url          = "/projects/%d/issues"         // Get a specific issues / Post a create issues
 )
 
 type Issue struct {
@@ -48,6 +48,20 @@ func (g *Gitlab) ProjectIssues(projectId int, pageNo int) ([]*Issue, error) {
 	var issues []*Issue
 
 	contents, err := g.buildAndExecRequest("GET", url, nil)
+	if err == nil {
+		err = json.Unmarshal(contents, &issues)
+	}
+
+	return issues, err
+}
+
+func (g *Gitlab) ProjectCreateIssues(projectId int, data []byte) ([]*Issue, error) {
+
+	url := g.ResourceUrl(fmt.Sprintf(project_issues_url, projectId), nil)
+
+	var issues []*Issue
+
+	contents, err := g.buildAndExecRequest("POST", url, data)
 	if err == nil {
 		err = json.Unmarshal(contents, &issues)
 	}
