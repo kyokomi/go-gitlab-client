@@ -17,7 +17,8 @@ type Issue struct {
 	ProjectId    int        `json:"project_id"`
 	Title        string     `json:"title"`
 	Description  string     `json:"description"`
-	Author       Person
+	Author       Person     `json:"author"`
+	Assignee     Person     `json:"assignee"`
 	State        string
 	CreatedAt    time.Time  `json:"created_at,omitempty"`
 	// AccessLevel int
