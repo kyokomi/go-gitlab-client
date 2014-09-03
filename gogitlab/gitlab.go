@@ -34,7 +34,11 @@ var (
 )
 
 func NewGitlab(baseUrl, apiPath, token string) *Gitlab {
-	config := &tls.Config{InsecureSkipVerify: *skipCertVerify}
+	return NewGitlabCert(baseUrl, apiPath, token, *skipCertVerify)
+}
+
+func NewGitlabCert(baseUrl, apiPath, token string, skipCert bool) *Gitlab {
+	config := &tls.Config{InsecureSkipVerify: skipCert}
 	tr := &http.Transport{
 		Proxy:           http.ProxyFromEnvironment,
 		TLSClientConfig: config,
