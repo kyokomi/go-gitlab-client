@@ -38,7 +38,7 @@ type Namespace struct {
 
 // A gitlab project
 type Project struct {
-	Id                   int        `json:"id,omitempty"`
+	ID                   int        `json:"id,omitempty"`
 	Name                 string     `json:"name,omitempty"`
 	Description          string     `json:"description,omitempty"`
 	DefaultBranch        string     `json:"default_branch,omitempty"`

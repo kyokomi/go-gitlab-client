@@ -3,36 +3,36 @@ package gogitlab
 import (
 	"encoding/json"
 	"fmt"
+	"strconv"
 	"time"
 )
 
 const (
-	issues_url                  = "/issues/"                     // Get a specific issues
-	project_issues_url          = "/projects/%d/issues"         // Get a specific issues / Post a create issues
+	issuesURL        = "/issues/"                    // Get a specific issues
+	projectIssuesURL = "/projects/:projectID/issues" // Get a specific issues / Post a create issues
 )
 
+// Issue struct.
 type Issue struct {
-	Id           int        `json:"id"`
-	LocalId      int        `json:"iid"`
-	ProjectId    int        `json:"project_id"`
-	Title        string     `json:"title"`
-	Description  string     `json:"description"`
-	Labels       []string   `json:"labels"`
-	Milestone    Milestone  `json:"milestone"`
-	Author       Person     `json:"author"`
-	Assignee     Person     `json:"assignee"`
-	State        string     `json:"state"`
-	UpdatedAt    time.Time  `json:"updated_at"`
-	CreatedAt    time.Time  `json:"created_at,omitempty"`
+	ID          int       `json:"id"`
+	LocalID     int       `json:"iid"`
+	ProjectID   int       `json:"project_id"`
+	Title       string    `json:"title"`
+	Description string    `json:"description"`
+	Labels      []string  `json:"labels"`
+	Milestone   Milestone `json:"milestone"`
+	Author      Person    `json:"author"`
+	Assignee    Person    `json:"assignee"`
+	State       string    `json:"state"`
+	UpdatedAt   time.Time `json:"updated_at"`
+	CreatedAt   time.Time `json:"created_at,omitempty"`
 	// AccessLevel int
 }
 
-/*
-Get a list of issues by the authenticated user.
-*/
+// Issues Get a list of issues by the authenticated user.
 func (g *Gitlab) Issues() ([]*Issue, error) {
 
-	url := g.ResourceUrl(issues_url, nil)
+	url := g.ResourceUrl(issuesURL, nil)
 
 	var issues []*Issue
 
@@ -44,9 +44,10 @@ func (g *Gitlab) Issues() ([]*Issue, error) {
 	return issues, err
 }
 
-func (g *Gitlab) ProjectIssues(projectId int, pageNo int) ([]*Issue, error) {
+// ProjectIssues Get a list of project issues by the authenticated user.
+func (g *Gitlab) ProjectIssues(projectID int, pageNo int) ([]*Issue, error) {
 
-	url := g.ResourceUrl(fmt.Sprintf(project_issues_url, projectId), nil)
+	url := g.ResourceUrl(projectIssuesURL, map[string]string{":projectID": strconv.Itoa(projectID)})
 	url += fmt.Sprintf("&page=%d", pageNo)
 
 	var issues []*Issue
@@ -59,16 +60,14 @@ func (g *Gitlab) ProjectIssues(projectId int, pageNo int) ([]*Issue, error) {
 	return issues, err
 }
 
-func (g *Gitlab) ProjectCreateIssues(projectId int, data []byte) ([]*Issue, error) {
+// ProjectCreateIssues Post a project issue by the authenticated user.
+func (g *Gitlab) ProjectCreateIssues(projectID int, data []byte) ([]byte, error) {
 
-	url := g.ResourceUrl(fmt.Sprintf(project_issues_url, projectId), nil)
+	url := g.ResourceUrl(projectIssuesURL, map[string]string{":projectID": strconv.Itoa(projectID)})
 
-	var issues []*Issue
-
-	contents, err := g.buildAndExecRequest("POST", url, data)
-	if err == nil {
-		err = json.Unmarshal(contents, &issues)
+	res, err := g.buildAndExecRequest("POST", url, data)
+	if err != nil {
+		return nil, err
 	}
-
-	return issues, err
+	return res, nil
 }
