@@ -5,13 +5,14 @@ import (
 )
 
 const (
-	users_url        = "/users"     // Get users list
-	user_url         = "/users/:id" // Get a single user.
-	current_user_url = "/user"      // Get current user
+	usersURL       = "/users"     // Get users list
+	userURL        = "/users/:id" // Get a single user.
+	currentUserURL = "/user"      // Get current user
 )
 
+// User ...
 type User struct {
-	Id            int    `json:"id,omitempty"`
+	ID            int    `json:"id,omitempty"`
 	Username      string `json:"username,omitempty"`
 	Email         string `json:"email,omitempty"`
 	Name          string `json:"name,omitempty"`
@@ -21,15 +22,16 @@ type User struct {
 	Skype         string `json:"skype,omitempty"`
 	LinkedIn      string `json:"linkedin,omitempty"`
 	Twitter       string `json:"twitter,omitempty"`
-	ExternUid     string `json:"extern_uid,omitempty"`
+	ExternUID     string `json:"extern_uid,omitempty"`
 	Provider      string `json:"provider,omitempty"`
-	ThemeId       int    `json:"theme_id,omitempty"`
-	ColorSchemeId int    `json:"color_scheme_id,color_scheme_id"`
+	ThemeID       int    `json:"theme_id,omitempty"`
+	ColorSchemeID int    `json:"color_scheme_id,color_scheme_id"`
 }
 
+// Users a All User
 func (g *Gitlab) Users() ([]*User, error) {
 
-	url := g.ResourceUrl(users_url, nil)
+	url := g.ResourceUrl(usersURL, nil)
 
 	var users []*User
 
@@ -42,7 +44,7 @@ func (g *Gitlab) Users() ([]*User, error) {
 }
 
 /*
-Get a single user.
+User Get a single user.
 
     GET /users/:id
 
@@ -60,7 +62,7 @@ Usage:
 */
 func (g *Gitlab) User(id string) (*User, error) {
 
-	url := g.ResourceUrl(user_url, map[string]string{":id": id})
+	url := g.ResourceUrl(userURL, map[string]string{":id": id})
 
 	user := new(User)
 
@@ -72,15 +74,17 @@ func (g *Gitlab) User(id string) (*User, error) {
 	return user, err
 }
 
+// DeleteUser DELETE a user by the authenticated user.
 func (g *Gitlab) DeleteUser(id string) error {
-	url := g.ResourceUrl(user_url, map[string]string{":id": id})
+	url := g.ResourceUrl(userURL, map[string]string{":id": id})
 	var err error
 	_, err = g.buildAndExecRequest("DELETE", url, nil)
 	return err
 }
 
+// CurrentUser GET a current user by the authenticated user.
 func (g *Gitlab) CurrentUser() (User, error) {
-	url := g.ResourceUrl(current_user_url, nil)
+	url := g.ResourceUrl(currentUserURL, nil)
 	var user User
 
 	contents, err := g.buildAndExecRequest("GET", url, nil)
