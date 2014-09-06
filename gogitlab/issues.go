@@ -22,7 +22,7 @@ type Issue struct {
 	Description string    `json:"description"`
 	Labels      []string  `json:"labels"`
 	Milestone   Milestone `json:"milestone"`
-	Author      Person    `json:"author"`
+	Author      User      `json:"author"`
 	Assignee    Person    `json:"assignee"`
 	State       string    `json:"state"`
 	UpdatedAt   time.Time `json:"updated_at"`

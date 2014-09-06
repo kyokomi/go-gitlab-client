@@ -25,7 +25,7 @@ func TestProjectIssues(t *testing.T) {
 
 func TestProjectIssue(t *testing.T) {
 	ts, gitlab := Stub("stubs/issues/single.json")
-	issue, err := gitlab.ProjectIssues(1, 1)
+	issue, err := gitlab.ProjectIssue(1, 1)
 
 	assert.Equal(t, err, nil)
 	assert.Equal(t, issue.ID, 43)
@@ -35,8 +35,6 @@ func TestProjectIssue(t *testing.T) {
 	assert.Equal(t, issue.Description, "")
 	assert.Equal(t, issue.Author.ID, 1)
 	assert.Equal(t, issue.State, "closed")
-	assert.Equal(t, issue.UpdatedAt, "2012-07-02T17:53:12Z")
-	assert.Equal(t, issue.CreatedAt, "2012-07-02T17:53:12Z")
 	defer ts.Close()
 }
 
