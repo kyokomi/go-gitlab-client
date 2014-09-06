@@ -8,8 +8,9 @@ import (
 )
 
 const (
-	issuesURL        = "/issues/"                    // Get a specific issues
-	projectIssuesURL = "/projects/:id/issues" // Get a specific issues / Post a create issues
+	issuesURL        = "/issues/"                       // Get a specific issues
+	projectIssuesURL = "/projects/:id/issues"           // Get a specific issues / Post a create issues
+	projectIssueURL  = "/projects/:id/issues/:issue_id" // Get a specific one issue
 )
 
 // Issue struct.
@@ -58,6 +59,26 @@ func (g *Gitlab) ProjectIssues(projectID int, pageNo int) ([]*Issue, error) {
 	}
 
 	return issues, err
+}
+
+// ProjectIssues Get a one project issues by the authenticated user.
+func (g *Gitlab) ProjectIssue(projectID, issueID int) (*Issue, error) {
+
+	params := map[string]string{
+		":id": strconv.Itoa(projectID),
+		":issue_id": strconv.Itoa(issueID),
+	}
+
+	url := g.ResourceUrl(projectIssueURL, params)
+
+	var issue *Issue
+
+	contents, err := g.buildAndExecRequest("GET", url, nil)
+	if err == nil {
+		err = json.Unmarshal(contents, &issue)
+	}
+
+	return issue, err
 }
 
 // ProjectCreateIssues Post a project issue by the authenticated user.

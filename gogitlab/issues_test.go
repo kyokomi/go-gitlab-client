@@ -23,6 +23,23 @@ func TestProjectIssues(t *testing.T) {
 	defer ts.Close()
 }
 
+func TestProjectIssue(t *testing.T) {
+	ts, gitlab := Stub("stubs/issues/single.json")
+	issue, err := gitlab.ProjectIssues(1, 1)
+
+	assert.Equal(t, err, nil)
+	assert.Equal(t, issue.ID, 43)
+	assert.Equal(t, issue.LocalID, 3)
+	assert.Equal(t, issue.ProjectID, 8)
+	assert.Equal(t, issue.Title, "4xx/5xx pages")
+	assert.Equal(t, issue.Description, "")
+	assert.Equal(t, issue.Author.ID, 1)
+	assert.Equal(t, issue.State, "closed")
+	assert.Equal(t, issue.UpdatedAt, "2012-07-02T17:53:12Z")
+	assert.Equal(t, issue.CreatedAt, "2012-07-02T17:53:12Z")
+	defer ts.Close()
+}
+
 func TestProjectCreateIssues(t *testing.T) {
 	ts, gitlab := Stub("")
 	_, err := gitlab.ProjectCreateIssues(1, nil)
