@@ -9,7 +9,7 @@ import (
 
 const (
 	issuesURL        = "/issues/"                    // Get a specific issues
-	projectIssuesURL = "/projects/:projectID/issues" // Get a specific issues / Post a create issues
+	projectIssuesURL = "/projects/:id/issues" // Get a specific issues / Post a create issues
 )
 
 // Issue struct.
@@ -47,7 +47,7 @@ func (g *Gitlab) Issues() ([]*Issue, error) {
 // ProjectIssues Get a list of project issues by the authenticated user.
 func (g *Gitlab) ProjectIssues(projectID int, pageNo int) ([]*Issue, error) {
 
-	url := g.ResourceUrl(projectIssuesURL, map[string]string{":projectID": strconv.Itoa(projectID)})
+	url := g.ResourceUrl(projectIssuesURL, map[string]string{":id": strconv.Itoa(projectID)})
 	url += fmt.Sprintf("&page=%d", pageNo)
 
 	var issues []*Issue
@@ -63,7 +63,7 @@ func (g *Gitlab) ProjectIssues(projectID int, pageNo int) ([]*Issue, error) {
 // ProjectCreateIssues Post a project issue by the authenticated user.
 func (g *Gitlab) ProjectCreateIssues(projectID int, data []byte) ([]byte, error) {
 
-	url := g.ResourceUrl(projectIssuesURL, map[string]string{":projectID": strconv.Itoa(projectID)})
+	url := g.ResourceUrl(projectIssuesURL, map[string]string{":id": strconv.Itoa(projectID)})
 
 	res, err := g.buildAndExecRequest("POST", url, data)
 	if err != nil {
