@@ -84,7 +84,9 @@ func (g *Gitlab) ProjectIssue(projectID, issueID int) (*Issue, error) {
 // ProjectCreateIssues Post a project issue by the authenticated user.
 func (g *Gitlab) ProjectCreateIssues(projectID int, data []byte) ([]byte, error) {
 
-	url := g.ResourceUrl(projectIssuesURL, map[string]string{":id": strconv.Itoa(projectID)})
+	params := map[string]string{":id": strconv.Itoa(projectID)}
+
+	url := g.ResourceUrl(projectIssuesURL, params)
 
 	res, err := g.buildAndExecRequest("POST", url, data)
 	if err != nil {
@@ -92,3 +94,21 @@ func (g *Gitlab) ProjectCreateIssues(projectID int, data []byte) ([]byte, error)
 	}
 	return res, nil
 }
+
+// ProjectEditIssues Put a project issue by the authenticated user.
+func (g *Gitlab) ProjectEditIssues(projectID, issueID int, data []byte) ([]byte, error) {
+
+	params := map[string]string{
+		":id": strconv.Itoa(projectID),
+		":issue_id": strconv.Itoa(issueID),
+	}
+
+	url := g.ResourceUrl(projectIssueURL, params)
+
+	res, err := g.buildAndExecRequest("PUT", url, data)
+	if err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+

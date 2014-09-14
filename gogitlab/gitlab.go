@@ -80,6 +80,10 @@ func (g *Gitlab) buildAndExecRequest(method, url string, body []byte) ([]byte, e
 		panic("Error while building gitlab request")
 	}
 
+	if method == "PUT" {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	}
+
 	resp, err := g.Client.Do(req)
 	if err != nil {
 		return nil, fmt.Errorf("Client.Do error: %q", err)
@@ -132,6 +136,10 @@ func (g *Gitlab) buildAndExecRequestRaw(method, url, opaque string, body []byte)
 
 	if len(opaque) > 0 {
 		req.URL.Opaque = opaque
+	}
+
+	if method == "PUT" {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	}
 
 	resp, err := g.Client.Do(req)
